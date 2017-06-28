@@ -2,9 +2,9 @@ import os, shutil, time
 
 def deleteFiles(path, deleteAll):
 	if os.path.isdir(path):
-		print("Cleaning up old files in %s" % path)
+		print("**Cleaning up old files in %s**\n" % path)
 	else:
-		print("Directory %s does not exist" % path)
+		print("WARNING: Directory %s does not exist\n" % path)
 		return
 
 	current_time = time.time()
