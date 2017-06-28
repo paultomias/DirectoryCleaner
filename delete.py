@@ -36,9 +36,11 @@ def deleteFiles(path, deleteAll):
 					shutil.rmtree(file_path)
 				except OSError as e:
 						print ("Error: %s - %s." % (e.filename,e.strerror))
+if "LAWDIR" in os.environ:
+	installer_path = os.environ['LAWDIR'] + "/system/backup/"	
+	log_path = os.environ['LAWDIR'] + "/system/"
 
-installer_path = os.environ['LAWDIR'] + "/system/backup/"	
-log_path = os.environ['LAWDIR'] + "/system/"
-
-deleteFiles(installer_path, True)
-deleteFiles(log_path, False)
+	deleteFiles(installer_path, True)
+	deleteFiles(log_path, False)
+else:
+	print("ERROR: LAWDIR is not set. Please set LAWDIR before running this script.")
