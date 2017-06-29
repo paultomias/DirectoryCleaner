@@ -9,7 +9,7 @@ def deleteFiles(path, deleteAll):
 
 	current_time = time.time()
 
-	for f in os.listdir(path):
+	for f in sorted(os.listdir(path)):
 		file_path = path + f
 		created_time = os.path.getctime(file_path)
 		storage_time = (current_time - created_time) // 86400
@@ -23,19 +23,19 @@ def deleteFiles(path, deleteAll):
 					except OSError as e:
 						print ("Error: %s - %s." % (e.filename,e.strerror))
 				
-				elif f.endswith(".log"):
+				elif f.endswith(".log") and f != "install.log":
 					print("Removing %s (File maturity: %d days)" % (f, storage_time))
 					try:
 						os.remove(file_path)
 					except OSError as e:
 						print ("Error: %s - %s." % (e.filename,e.strerror))
 
-			elif os.path.isdir(file_path) and deleteAll:
+			elif os.path.isdir(file_path) and deleteAll and len(os.listdir(path)) > 10:
 				print("Removing %s (File maturity: %d days)" % (f, storage_time))
 				try:
 					shutil.rmtree(file_path)
 				except OSError as e:
-						print ("Error: %s - %s." % (e.filename,e.strerror))
+					print ("Error: %s - %s." % (e.filename,e.strerror))
 if "LAWDIR" in os.environ:
 	installer_path = os.environ['LAWDIR'] + "/system/backup/"	
 	log_path = os.environ['LAWDIR'] + "/system/"
